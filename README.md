@@ -1,6 +1,7 @@
 # learn_api
 
-A new Flutter project.
+Firstly i implement just get method.
+Gredually, I'll upload post, put and delete ect method.
 
 ## Getting Started
 
