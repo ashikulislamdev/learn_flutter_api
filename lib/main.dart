@@ -60,29 +60,26 @@ class _TestingApiState extends State<TestingApi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          width: MediaQuery.of(context).size.width - 30,
-          height: 300,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20), color: Colors.lightBlue
-          ),
-          // child: Center(
-          //   child: dataResponse == null ? const Text("Loading....")
-          //   : Text(dataResponse['email'].toString()),
-          // ),
-          child: Center(
-            child: listOfResponse == null ? const Text("Loading....")
-            : Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Hello I'm " + listOfResponse[1]['first_name'].toString() +" "+ listOfResponse[1]['last_name'].toString()),
-                Image.network(listOfResponse[1]['avatar'].toString(),),
-                Text(listOfResponse[1]['email'].toString() + " is my Email id")
-              ],
-            ),
-          ),
+      body: Padding(
+        padding: EdgeInsets.all(MediaQuery.of(context).size.width / 12),
+        child: ListView.builder(
+          itemCount: listOfResponse == null ? 0 : listOfResponse.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(listOfResponse[index]['first_name']+" "+listOfResponse[index]['last_name']),
+              subtitle: Text(listOfResponse[index]['email']),
+              leading: Image.network(listOfResponse[index]['avatar']),
+              trailing: Container(
+                width: 30,
+                height: 30,
+                decoration: BoxDecoration(
+                  color: Colors.amber[600],
+                  borderRadius: BorderRadius.circular(50)
+                ),
+                child: Center(child: Text(listOfResponse[index]['id'].toString())),
+              ),
+            );
+          }
         ),
       ),
     );
