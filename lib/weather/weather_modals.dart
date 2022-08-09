@@ -1,15 +1,58 @@
+class WeatherInfo {
+  final String description;
+  final String icon;
+  WeatherInfo({
+    required this.description,
+    required this.icon,
+  });
+  factory WeatherInfo.fromJson(Map<String, dynamic> json){
+    final description = json['description'];
+    final icon = json['icon'];
+    return WeatherInfo(description: description, icon: icon);
+  }
+}
+class TempResponse {
+  final double temperature;
+  TempResponse({
+    required this.temperature,
+  });
+
+  factory TempResponse.fromJson(Map<String, dynamic> json){
+    final temperature = json['temp'];
+    return TempResponse(temperature: temperature);
+  }
+}
+
 class WeatherResponse {
   final String cityName;
   final int cityId;
-  WeatherResponse({     //generate constrictor
+
+  final TempResponse tempResponse;
+  final WeatherInfo weatherInfo;
+
+  WeatherResponse({
+    //generate constrictor
     required this.cityName,
     required this.cityId,
+    required this.tempResponse,
+    required this.weatherInfo,
+
+    // String get iconUrl{
+    //   return "";
+    // }
   });
 
   factory WeatherResponse.fromJson(Map<String, dynamic> getJsonData){    // json is a collection of map/dictionary
     final cityName = getJsonData['name'];    //add the key name which define in the api
     final cityId = getJsonData['id'];
-    return WeatherResponse(cityName: cityName, cityId: cityId);
+
+    final tempInfoJson = getJsonData['main'];
+    final tempInfo = TempResponse.fromJson(tempInfoJson);
+
+    final weatherInfoJson = getJsonData['weather'][0];
+    final weatherInfo = WeatherInfo.fromJson(weatherInfoJson);
+
+    return WeatherResponse(cityName: cityName, cityId: cityId, tempResponse: tempInfo, weatherInfo: weatherInfo);
   }
 }
 
