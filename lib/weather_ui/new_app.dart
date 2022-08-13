@@ -25,7 +25,7 @@ class _NewWeatherAppState extends State<NewWeatherApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[300],
+      backgroundColor: Colors.transparent,
       body: FutureBuilder(
         future: getWeather(),
         builder: (context, snapshot) {
@@ -88,9 +88,10 @@ class _NewWeatherAppState extends State<NewWeatherApp> {
                                     ) )
                                   ],
                                 ),
-                              )
+                              ),
                             ],
-                          )),
+                          )
+                        ),
                     ),
                   ),
                   Padding(
@@ -99,56 +100,59 @@ class _NewWeatherAppState extends State<NewWeatherApp> {
                       alignment: Alignment.topRight,
                       child: IconButton(
                       onPressed: () {
-            
-                        showModalBottomSheet<void>(
-                        context: context,                      
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(25.0), 
-                          )
-                        ),
-                        builder: (BuildContext context) {
-                          return Container(
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(25),
-                                topRight: Radius.circular(25)
-                              )
-                            ),
-                            height: 200,
-                            child: Center(
-                              child: Column(
-                                children: [
-                                  const SizedBox(height: 20,),
-                                  Text('Weather Today', style: GoogleFonts.andika(
-                                    textStyle: const TextStyle(fontSize:18, fontWeight: FontWeight.bold)
-                                  ),),
-                                  const SizedBox(height: 20,),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        RecentWeather(icon: Icons.sunny, time: "Present", temp: "${weatherData!.temp?.toStringAsFixed(0)}°",),
-                                        RecentWeather(icon: Icons.sunny_snowing, time: "Feels Like", temp: "${weatherData!.feels_like?.toStringAsFixed(0)}°",),
-                                        RecentWeather(icon: Icons.sunny, time: "Min Temp", temp: "${weatherData!.temp_min?.toStringAsFixed(0)}°",),
-                                        RecentWeather(icon: Icons.wb_sunny_rounded, time: "Max Temp", temp: "${weatherData!.temp_max?.toStringAsFixed(0)}°",),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          );
-                        }
-                      );
-            
+                        
                       },
                       icon: const Icon(Icons.menu, size: 36,),
                       color: Color(0xFFF8F8F8)),
                     ),
                   ),
+
+                  Positioned(
+                    bottom: 0,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          topRight: Radius.circular(25)
+                        ),
+                      ),
+                      height: 200,
+                      width: MediaQuery.of(context).size.width,
+                      child: Center(
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 10,),
+                            Positioned(
+                              child: CustomPaint(
+                                child: Container(
+                                  color: Colors.grey,
+                                  width: 25,
+                                  height: 3,
+                                ),
+                              ),
+                            ),
+                            Text('Weather Today', style: GoogleFonts.andika(
+                              textStyle: const TextStyle(fontSize:18, fontWeight: FontWeight.bold)
+                            ),),
+                            const SizedBox(height: 20,),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  RecentWeather(icon: Icons.sunny, time: "Present", temp: "${weatherData!.temp?.toStringAsFixed(0)}°",),
+                                  RecentWeather(icon: Icons.sunny_snowing, time: "Feels Like", temp: "${weatherData!.feels_like?.toStringAsFixed(0)}°",),
+                                  RecentWeather(icon: Icons.sunny, time: "Min Temp", temp: "${weatherData!.temp_min?.toStringAsFixed(0)}°",),
+                                  RecentWeather(icon: Icons.wb_sunny_rounded, time: "Max Temp", temp: "${weatherData!.temp_max?.toStringAsFixed(0)}°",),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             );
